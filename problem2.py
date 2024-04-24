@@ -9,25 +9,38 @@ DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
 """
 
 import numpy as np
+
 from generate import GENERATE
+from problem1 import createBrownVocabDict
 
 
 vocab = open("brown_vocab_100.txt")
 
 #load the indices dictionary
-word_index_dict = {}
-for i, line in enumerate(vocab):
-    #TODO: import part 1 code to build dictionary
+brown_vocab_dict = createBrownVocabDict(vocab)
 
 f = open("brown_100.txt")
 
-counts = #TODO: initialize counts to a zero vector
+counts = np.zeros(len(brown_vocab_dict))
 
 #TODO: iterate through file and update counts
+for sentance in f:
+    # print(sentance)
+    split_sentance = sentance.lower().split(" ")
+    for token in split_sentance:
+        vocab_id = brown_vocab_dict.get(token)
+        if vocab_id == None:
+            continue
+        else:
+            counts[vocab_id] = counts[vocab_id] + 1
 
 f.close()
 
+print(counts)
 #TODO: normalize and writeout counts. 
-
+probs = counts / np.sum(counts)
+wf = open('unigram_probs.txt','w')
+wf.write(str(probs))
+wf.close()
 
 
