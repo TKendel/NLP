@@ -45,35 +45,31 @@ def GENERATE(word_index_dict, probs, model_type, max_words, start_word):
     index_word_dict = {v: k for k, v in word_index_dict.items()}
     num_words = 0
 
-    #been passed a list of probabilities
+    # been passed a list of probabilities
     if model_type == "unigram":
 
-        #using https://stackoverflow.com/questions/483666/python-reverse-invert-a-mapping
-        while(True):
+        # using https://stackoverflow.com/questions/483666/python-reverse-invert-a-mapping
+        while True:
             wordIndex = np.random.choice(len(word_index_dict), 1, p=list(probs))
             word = index_word_dict[wordIndex[0]]
             returnSTR += word + " "
-            num_words +=1
+            num_words += 1
             if word == "</s>" or num_words == max_words:
                 break
 
         return returnSTR
 
-    #been passed a matrix of probabilities, where each row is the previous word. 
+    # been passed a matrix of probabilities, where each row is the previous word.
     if model_type == "bigram":
         returnSTR = start_word + " "
         prevWord = start_word
-        while(True):
+        while True:
             wordIndex = np.random.choice(len(word_index_dict), 1, p=list(probs[word_index_dict[prevWord]]))
             word = index_word_dict[wordIndex[0]]
             returnSTR += word + " "
-            num_words +=1
+            num_words += 1
             prevWord = word
             if word == "</s>" or num_words == max_words:
                 break
 
         return returnSTR
-
-
-
-

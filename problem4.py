@@ -39,11 +39,14 @@ def update_bigram_counts(filename):
 
 update_bigram_counts("brown_100.txt")
 
+# smoothing
+bigram_counts += 0.1
+
 # normalize counts
 bigram_probs = normalize(bigram_counts, norm='l1', axis=1)
 
 # writeout bigram probabilities
-with open("bigram_probs.txt", "w") as f:
+with open("smooth_probs.txt", "w") as f:
     bigrams_to_write = [('all', 'the'), ('the', 'jury'), ('the', 'campaign'), ('anonymous', 'calls')]
     for previous, word in bigrams_to_write:
         if previous in brown_vocab_dict and word in brown_vocab_dict:

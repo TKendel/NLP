@@ -1,0 +1,4 @@
+p(the | all) = 1.0
+p(jury | the) = 0.0707070707070707
+p(campaign | the) = 0.0
+p(calls | anonymous) = 0.3333333333333333
