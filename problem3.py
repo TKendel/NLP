@@ -49,3 +49,30 @@ with open("bigram_probs.txt", "w") as f:
         if previous in brown_vocab_dict and word in brown_vocab_dict:
             prob = bigram_probs[brown_vocab_dict[previous]][brown_vocab_dict[word]]
             f.write(f"p({word} | {previous}) = {prob}\n")
+
+
+# Q6 : Calculating sentence proabilities
+
+with open('bigram_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file:
+    for line in ty_file:
+        split_line = line.lower().split()[:-1]
+        sentprob = 1
+        sent_len = len(split_line) 
+        print("Processing sentence:", split_line)
+        for i in range(len(split_line) - 1):
+            previous = split_line[i]
+            word = split_line[i + 1]
+            print("Processing bigram:", previous, word)
+            if previous in brown_vocab_dict and word in brown_vocab_dict:
+                vocab_id_previous = brown_vocab_dict[previous]
+                vocab_id_word = brown_vocab_dict[word]
+                print("Vocab IDs:", vocab_id_previous, vocab_id_word)
+                sentprob *= bigram_probs[vocab_id_previous][vocab_id_word]
+                print("Sentprob:", sentprob)
+        perplexity = 1 / (pow(sentprob, 1.0 / sent_len))
+        print("Perplexity:", perplexity)
+        wf.write(str(perplexity) + '\n')
+
+ty_file.close()
+wf.close()
+    

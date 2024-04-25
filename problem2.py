@@ -44,3 +44,24 @@ wf.write(str(probs))
 wf.close()
 
 
+# Q6 : Calculating sentence proabilities
+
+with open('unigram_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file:
+    for line in ty_file:
+        split_line = line.lower().split()
+        sentprob = 1
+        sent_len = len(split_line) 
+        for token in split_line:
+            vocab_id = brown_vocab_dict.get(token)
+            if vocab_id is None:
+                continue
+            sentprob *= probs[vocab_id]
+        perplexity = 1 / (pow(sentprob, 1.0/sent_len))
+        wf.write(str(perplexity) + '\n')
+        print("Perplexity: ", perplexity)
+        wf.write(str(sentprob) + '\n')
+        print("Joint Prob: ", sentprob)
+
+ty_file.close()
+wf.close()
+    
