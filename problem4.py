@@ -30,7 +30,7 @@ def update_bigram_counts(filename):
     previous_word = '<s>'
     with open(filename, 'r') as file:
         for line in file:
-            words = line.strip().split()
+            words = line.lower().strip().split()
             for word in words:
                 if word in brown_vocab_dict and previous_word in brown_vocab_dict:
                     bigram_counts[brown_vocab_dict[previous_word]][brown_vocab_dict[word]] += 1

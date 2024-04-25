@@ -19,12 +19,13 @@ def createBrownVocabDict(text):
         word_index_dict.update(new_word)
     return word_index_dict
 
+
 if __name__ == "__main__":
     text = open("brown_vocab_100.txt")
     word_index_dict = createBrownVocabDict(text)
 
     # TODO: write word_index_dict to word_to_index_100.txt
-    wf = open('word_to_index_100.txt','w')
+    wf = open('word_to_index_100.txt', 'w')
     wf.write(str(word_index_dict))
     wf.close()
 
