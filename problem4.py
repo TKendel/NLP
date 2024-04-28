@@ -55,17 +55,16 @@ with open("smooth_probs.txt", "w") as f:
 
 
 # Q6 : Calculating sentence probabilities
-
 with open('smoothed_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file:
     for line in ty_file:
-        split_line = line.lower().split()[:-1]
-        print("split_line", split_line)
+        words = line.lower().strip().split()
+        print("split_line", words)
         sentprob = 1
-        sent_len = len(split_line) 
-        print("Processing sentence:", split_line)
-        for i in range(len(split_line) - 1):
-            previous = split_line[i]
-            word = split_line[i + 1]
+        sent_len = len(words)
+        print("Processing sentence:", words)
+        for i in range(sent_len - 1):
+            previous = words[i]
+            word = words[i + 1]
             print("Processing bigram:", previous, word)
             if previous in brown_vocab_dict and word in brown_vocab_dict:
                 vocab_id_previous = brown_vocab_dict[previous]
@@ -73,9 +72,9 @@ with open('smoothed_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_fil
                 print("Vocab IDs:", vocab_id_previous, vocab_id_word)
                 sentprob *= bigram_probs[vocab_id_previous][vocab_id_word]
                 print("Sentprob:", sentprob)
-        perplexity = 1 / (pow(sentprob, 1.0/sent_len))
+        perplexity = 1 / (pow(sentprob, 1.0 / (sent_len - 1)))
         print("Perplexity:", perplexity)
-        wf.write(str(perplexity) + '\n')
+        wf.write(f"{perplexity}\n")
 
 
 # Q7, sentence generation
