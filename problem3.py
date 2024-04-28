@@ -50,14 +50,13 @@ with open("bigram_probs.txt", "w") as f:
             prob = bigram_probs[brown_vocab_dict[previous]][brown_vocab_dict[word]]
             f.write(f"p({word} | {previous}) = {prob}\n")
 
-
 # Q6 : Calculating sentence proabilities
 
 with open('bigram_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file:
     for line in ty_file:
         split_line = line.lower().split()[:-1]
         sentprob = 1
-        sent_len = len(split_line) 
+        sent_len = len(split_line)
         print("Processing sentence:", split_line)
         for i in range(len(split_line) - 1):
             previous = split_line[i]
@@ -73,6 +72,11 @@ with open('bigram_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file:
         print("Perplexity:", perplexity)
         wf.write(str(perplexity) + '\n')
 
-ty_file.close()
-wf.close()
-    
+
+# Q7, sentence generation
+filename = "bigram_generation.txt"
+with open(filename, 'w') as f:
+    for i in range(10):
+        gen = GENERATE(brown_vocab_dict, bigram_probs, "bigram", 25, '<s>')
+        print(gen)
+        f.write(gen + "\n")

@@ -77,6 +77,11 @@ with open('smoothed_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_fil
         print("Perplexity:", perplexity)
         wf.write(str(perplexity) + '\n')
 
-ty_file.close()
-wf.close()
-    
+
+# Q7, sentence generation
+filename = "smoothed_generation.txt"
+with open(filename, 'w') as f:
+    for i in range(10):
+        gen = GENERATE(brown_vocab_dict, bigram_probs, "bigram", 25, '<s>')
+        print(gen)
+        f.write(gen + "\n")

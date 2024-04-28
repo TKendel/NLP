@@ -73,3 +73,4 @@ def GENERATE(word_index_dict, probs, model_type, max_words, start_word):
                 break
 
         return returnSTR
+
