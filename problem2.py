@@ -55,8 +55,8 @@ with open('unigram_eval.txt', 'w') as wf, open('toy_corpus.txt', 'r') as ty_file
         perplexity = 1 / (pow(sentprob, 1.0 / sent_len))
         wf.write(str(perplexity) + '\n')
         print("Perplexity: ", perplexity)
-        wf.write(str(sentprob) + '\n')
-        print("Joint Prob: ", sentprob)
+        # wf.write(str(sentprob) + '\n')
+        # print("Joint Prob: ", sentprob)
 
 
 # Q7, sentence generation
