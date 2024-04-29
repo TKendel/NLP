@@ -34,6 +34,8 @@ for sentance in f:
 
 f.close()
 
+print(counts)
+
 #TODO: normalize and writeout counts. 
 probs = counts / np.sum(counts)
 wf = open('unigram_probs.txt', 'w')
