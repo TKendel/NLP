@@ -22,21 +22,19 @@ f = open("brown_100.txt")
 
 counts = np.zeros(len(brown_vocab_dict))
 
-#  iterate through file and update counts
-for sentence in f:
-    # print(sentance)
-    split_sentance = sentence.lower().split(" ")
+#TODO: iterate through file and update counts
+for sentance in f:
+    split_sentance = sentance.lower().split(" ")
     for token in split_sentance:
         vocab_id = brown_vocab_dict.get(token)
         if vocab_id == None:
             continue
         else:
-            counts[vocab_id] = counts[vocab_id] + 1
+            counts[vocab_id] += 1
 
 f.close()
 
-print(counts)
-# normalize and writeout counts.
+#TODO: normalize and writeout counts. 
 probs = counts / np.sum(counts)
 wf = open('unigram_probs.txt', 'w')
 wf.write(str(probs))

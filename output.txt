@@ -1,0 +1,11 @@
+Number of tokens: 1161192
+Total Categories: 15
+Word count: 56038
+Average number of words per sentance:20.250994070456922
+Average length of words: 4.276538246904905
+The top 10 most frequent POS tags are : [('NN', 152470), ('IN', 120557), ('AT', 97959), ('JJ', 64028), ('.', 60638), (',', 58156), ('NNS', 55110), ('CC', 37718), ('RB', 36464), ('NP', 34476)]Number of tokens: 1161192
+Total Categories: 15
+Word count: 56038
+Average number of words per sentance:20.250994070456922
+Average length of words: 4.276538246904905
+The top 10 most frequent POS tags are : [('NN', 152470), ('IN', 120557), ('AT', 97959), ('JJ', 64028), ('.', 60638), (',', 58156), ('NNS', 55110), ('CC', 37718), ('RB', 36464), ('NP', 34476)]
