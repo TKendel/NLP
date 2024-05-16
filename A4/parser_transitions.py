@@ -8,6 +8,7 @@ Authors: Sahil Chopra, Haoshen Hong, Nathan Schneider, Lucia Donatelli
 
 import sys
 
+
 class PartialParse(object):
     def __init__(self, sentence):
         """Initializes this partial parse.
@@ -17,6 +18,8 @@ class PartialParse(object):
         """
         # The sentence being parsed is kept for bookkeeping purposes. Do NOT alter it in your code.
         self.sentence = sentence
+
+
 
         ### YOUR CODE HERE (3 Lines)
         ### Your code should initialize the following fields:
@@ -32,9 +35,11 @@ class PartialParse(object):
         ### Note: If you need to use the sentence object to initialize anything, make sure to not directly 
         ###       reference the sentence object.  That is, remember to NOT modify the sentence object. 
 
+        self.stack = ["ROOT"]
+        self.buffer = list(sentence)
+        self.dependencies = []
 
         ### END YOUR CODE
-
 
     def parse_step(self, transition):
         """Performs a single parse step by applying the given transition to this partial parse
@@ -50,6 +55,13 @@ class PartialParse(object):
         ###         1. Shift
         ###         2. Left Arc
         ###         3. Right Arc
+
+        if transition == "S":
+            self.stack.append(self.buffer.pop(0))
+        elif transition == "LA":
+            self.dependencies.append((self.stack[-1], self.stack.pop(-2)))
+        elif transition == "RA":
+            self.dependencies.append((self.stack[-2], self.stack.pop(-1)))
 
 
         ### END YOUR CODE
@@ -102,7 +114,6 @@ def minibatch_parse(sentences, model, batch_size):
     ###             to remove objects from the `unfinished_parses` list. This will free the underlying memory that
     ###             is being accessed by `partial_parses` and may cause your code to crash.
 
-
     ### END YOUR CODE
 
     return dependencies
@@ -145,7 +156,7 @@ def test_parse():
     dependencies = PartialParse(sentence).parse(["S", "S", "S", "LA", "RA", "RA"])
     dependencies = tuple(sorted(dependencies))
     expected = (('ROOT', 'parse'), ('parse', 'sentence'), ('sentence', 'this'))
-    assert dependencies == expected,  \
+    assert dependencies == expected, \
         "parse test resulted in dependencies {:}, expected {:}".format(dependencies, expected)
     assert tuple(sentence) == ("parse", "this", "sentence"), \
         "parse test failed: the input sentence should not be modified"
@@ -155,7 +166,8 @@ def test_parse():
 class DummyModel(object):
     """Dummy model for testing the minibatch_parse function
     """
-    def __init__(self, mode = "unidirectional"):
+
+    def __init__(self, mode="unidirectional"):
         self.mode = mode
 
     def predict(self, partial_parses):
@@ -178,6 +190,7 @@ class DummyModel(object):
         """
         return [("RA" if len(pp.stack) % 2 == 0 else "LA") if len(pp.buffer) == 0 else "S"
                 for pp in partial_parses]
+
 
 def test_dependencies(name, deps, ex_deps):
     """Tests the provided dependencies match the expected dependencies"""
@@ -216,18 +229,20 @@ def test_minibatch_parse():
     deps = minibatch_parse(sentences, DummyModel(mode="interleave"), 1)
     test_dependencies("minibatch_parse", deps[0],
                       (('ROOT', 'is'), ('dependency', 'interleaving'),
-                      ('dependency', 'test'), ('is', 'dependency'), ('is', 'this')))
+                       ('dependency', 'test'), ('is', 'dependency'), ('is', 'this')))
     print("minibatch_parse test passed!")
 
 
 if __name__ == '__main__':
     args = sys.argv
     if len(args) != 2:
-        raise Exception("You did not provide a valid keyword. Either provide 'part_c' or 'part_d', when executing this script")
+        raise Exception(
+            "You did not provide a valid keyword. Either provide 'part_c' or 'part_d', when executing this script")
     elif args[1] == "part_c":
         test_parse_step()
         test_parse()
     elif args[1] == "part_d":
         test_minibatch_parse()
     else:
-        raise Exception("You did not provide a valid keyword. Either provide 'part_c' or 'part_d', when executing this script")
+        raise Exception(
+            "You did not provide a valid keyword. Either provide 'part_c' or 'part_d', when executing this script")
